@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/heroesFragment"
+        android:orderInCategory="1"
+        android:title="Heros"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/favoriteHeroesFragment"
+        android:orderInCategory="2"
+        android:title="Favorite"
+        app:showAsAction="always" />
+
+</menu>
