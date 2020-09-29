@@ -2,8 +2,8 @@ package com.example.marvelopenapp.webservice
 
 import MarvelObject
 import androidx.appcompat.app.AppCompatActivity
+import com.example.marvelopenapp.application.HeroesApplication
 import com.example.marvelopenapp.base.BaseCallback
-import com.example.marvelopenapp.utils.NetworkUtils
 import retrofit2.Call
 import retrofit2.Response
 
@@ -16,7 +16,7 @@ class MarvelServices {
         offset: Int,
         callback: (list: MarvelObject) -> Unit
     ) {
-        val retrofit = NetworkUtils.instance.getRetrofitInstance()
+        val retrofit = HeroesApplication.getRetrofitInstance(context)
         val endpoint = retrofit.create(MarvelServicesInterface::class.java)
 
         endpoint.getHerosList(offset = offset.toString()).enqueue(object: BaseCallback<MarvelObject>(context){

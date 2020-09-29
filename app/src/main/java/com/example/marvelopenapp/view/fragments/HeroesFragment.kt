@@ -1,26 +1,31 @@
-package com.example.marvelopenapp.view
+package com.example.marvelopenapp.view.fragments
 
+import Heros
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelopenapp.R
+import com.example.marvelopenapp.view.adapters.HeroesAdapter
 import com.example.marvelopenapp.viewmodels.HeroesViewModel
 import com.example.marvelopenapp.viewmodels.factory.HeroesViewModelFactory
+import kotlinx.android.synthetic.main.fragment_heroes.*
 
 class HeroesFragment : Fragment() {
 
     private val viewModel: HeroesViewModel by lazy {
         ViewModelProvider(
-            this,
+            requireActivity(),
             HeroesViewModelFactory(activity as AppCompatActivity)
         ).get(HeroesViewModel::class.java)
     }
+
+    private lateinit var adapter: HeroesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,11 +38,19 @@ class HeroesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.heroesList.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
-            //Build the adapter :D
-        })
+        viewModel.heroesList.observe(viewLifecycleOwner, observerHeroes())
 
-        viewModel.getHeroes()
+        adapter = HeroesAdapter((activity as AppCompatActivity), viewModel.getHeroes())
+        recycler_view.layoutManager = LinearLayoutManager(context)
+        recycler_view.adapter = adapter
+
+        viewModel.getHeroesFromWebService()
+    }
+
+
+    private fun observerHeroes(): Observer<MutableList<Heros>> {
+        return Observer{heroesList ->
+            adapter?.updateList(heroesList)
+        }
     }
 }

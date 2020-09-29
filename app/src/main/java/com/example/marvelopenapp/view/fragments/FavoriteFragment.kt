@@ -1,4 +1,4 @@
-package com.example.marvelopenapp.view
+package com.example.marvelopenapp.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

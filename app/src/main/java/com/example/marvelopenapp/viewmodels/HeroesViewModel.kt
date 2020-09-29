@@ -12,11 +12,15 @@ class HeroesViewModel(var context: AppCompatActivity) : ViewModel() {
     private var offset: Int = 0
 
     //call webservice method
-    fun getHeroes() {
+    fun getHeroesFromWebService() {
         MarvelServices().callHeroesList(context, offset) {
             heroesList.value = getOnlyHeroesResult(it)
             offset.plus(heroesList.value!!.size)
         }
+    }
+
+    fun getHeroes(): MutableList<Heros>{
+        return heroesList.value ?: mutableListOf()
     }
 
     //Filter the response to get only heroes result :D
